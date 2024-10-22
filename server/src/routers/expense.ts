@@ -37,6 +37,7 @@ router.get("/user/:userId", async (req: Request, res: Response): Promise<void> =
         res.status(500).json({ message: error.message });
     }
 })
+
 router.get("/overall", async (req: Request, res: Response): Promise<void> => {
     try {
         const expenses = await Expense.find().populate('participants', 'name');
@@ -45,6 +46,7 @@ router.get("/overall", async (req: Request, res: Response): Promise<void> => {
         res.status(500).json({ message: error.message });
     }
 })
+
 router.get("/balance-sheet/:userId", async (req: Request, res: Response): Promise<void> => {
     try {
         const userId = req.params.userId;
