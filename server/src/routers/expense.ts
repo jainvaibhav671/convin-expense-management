@@ -1,11 +1,18 @@
 import { IExpense, Expense } from "@/models/expense";
 import { Router, Request, Response } from "express"
 
+import { authenticateToken } from "@/middlewares/authMiddleware"
+
 const router = Router()
 
-router.post("/add", async (req: Request, res: Response): Promise<void> => {
+router.use(authenticateToken);
+
+router.post("/add", async (req, res): Promise<void> => {
+    // @ts-ignore
+    const userId = req.user.id as string
     try {
-        const { description, amount, splitMethod, splitDetails, participants } = req.body;
+        const { title, description, amount, splitMethod, splitDetails, participants } = req.body;
+        console.log(req.body)
 
         // Validate percentages if splitMethod is 'percentage'
         if (splitMethod === 'percentage' && splitDetails.reduce((a: number, b: number) => a + b, 0) !== 100) {
@@ -14,24 +21,29 @@ router.post("/add", async (req: Request, res: Response): Promise<void> => {
         }
 
         const expense: IExpense = new Expense({
+            title,
             description,
             amount,
             splitMethod,
             splitDetails,
-            participants
+            participants,
+            userId
         });
 
         await expense.save();
         res.status(201).json(expense);
     } catch (error: any) {
+        console.log(error)
         res.status(500).json({ message: error.message });
     }
 })
 
-router.get("/user/:userId", async (req: Request, res: Response): Promise<void> => {
+router.get("/user", async (req, res): Promise<void> => {
+    // @ts-ignore
+    const userId = req.user.id as string;
+
     try {
-        const userId = req.params.userId;
-        const expenses = await Expense.find({ participants: userId }).populate('participants', 'name');
+        const expenses = await Expense.find({ userId });
         res.json(expenses);
     } catch (error: any) {
         res.status(500).json({ message: error.message });

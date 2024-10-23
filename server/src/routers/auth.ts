@@ -30,14 +30,15 @@ router.post("/login", async (req: Request, res: Response): Promise<void> => {
             secure: process.env.NODE_ENV === 'production'
         });
 
-        res.json({ message: 'Logged in successfully' });
+        res.json({ message: 'Logged in successfully', userId: user._id });
     } catch (error: any) {
         res.status(500).json({ message: error.message });
     }
 })
 
 router.post("/register", async (req: Request, res: Response): Promise<void> => {
-    const { name, email, mobile, password } = req.body;
+    const { name, email, phoneno, password, confirmPassword } = req.body;
+    console.log(req.body)
 
     try {
         const existingUser = await User.findOne({ email }).lean();
@@ -46,12 +47,17 @@ router.post("/register", async (req: Request, res: Response): Promise<void> => {
             return;
         }
 
+        if (password !== confirmPassword) {
+            res.status(400).json({ message: 'Passwords do not match' });
+            return;
+        }
+
         const hashedPassword = await bcrypt.hash(password, 10);
 
         const newUser: IUser = new User({
             name,
             email,
-            mobile,
+            mobile: phoneno,
             password: hashedPassword
         });
 
@@ -66,8 +72,9 @@ router.post("/register", async (req: Request, res: Response): Promise<void> => {
             secure: process.env.NODE_ENV === 'production'
         });
 
-        res.status(201).json({ message: 'User registered successfully' });
+        res.status(201).json({ message: 'User registered successfully', userId: newUser._id });
     } catch (error: any) {
+        console.log(error)
         res.status(500).json({ message: error.message });
     }
 })
@@ -77,6 +84,20 @@ router.get("/logout", (_req: Request, res: Response): void => {
     res.json({ message: 'Logged out successfully' });
 })
 
-// router.get("/authenticated",)
+router.get("/authenticated", (req, res) => {
+    const token = req.cookies.token;
+    if (!token) {
+        res.status(401).json({ message: 'Unauthorized' });
+        return
+    }
+
+    try {
+        const decoded = jwt.verify(token, process.env.JWT_SECRET as string) as { id: string };
+        res.json({ message: 'Authenticated', userId: decoded.id });
+    } catch (error) {
+        res.status(401).json({ message: 'Unauthorized' });
+        return
+    }
+})
 
 export default router
