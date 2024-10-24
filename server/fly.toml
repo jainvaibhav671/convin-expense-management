@@ -1,19 +1,19 @@
-# fly.toml app configuration file generated for convin on 2024-10-24T16:25:17+05:30
+# fly.toml app configuration file generated for convin-api on 2024-10-24T17:53:46+05:30
 #
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
 
-app = 'convin'
+app = 'convin-api'
 primary_region = 'bom'
 
 [build]
 
 [http_service]
-  internal_port = 80
+  internal_port = 5000
   force_https = true
   auto_stop_machines = 'stop'
   auto_start_machines = true
-  min_machines_running = 1
+  min_machines_running = 0
   processes = ['app']
 
 [[vm]]

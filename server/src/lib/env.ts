@@ -13,6 +13,7 @@ const env = {
 
 // Check if environment variables are defined
 for (const [key, value] of Object.entries(env)) {
+    console.log(`Checking environment variable: ${key}`, value)
     if (typeof value === "undefined") {
         console.log(`Missing environment variable: ${key}`)
     }

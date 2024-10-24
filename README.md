@@ -5,7 +5,9 @@
 ## Table of Contents
 
 * [Introduction](#introduction)
+* [Deployment](#deployment)
 * [Setup Instructions](#setup-instructions)
+	+ [Docker Setup](#docker-setup)
 	+ [Client Setup](#client-setup)
 	+ [Server Setup](#server-setup)
 * [Assignment Goals](#assignment-goals)
@@ -19,6 +21,16 @@ This project is a full-stack application that consists of a client-side frontend
 The application allows users to manage expenses and participants, and provides a simple and intuitive interface for users to interact with.
 
 The project is hosted on [Fly.io](https://www.fly.io)
+
+## Deployment
+
+The project is hosted on [Fly.io](https://www.fly.io)
+
+Frontend URL: [https://convin.fly.dev](https://convin.fly.dev)
+Backend URL: [https://convin-api.fly.dev](https://convin-api.fly.dev)
+
+You can access the frontend and backend by using the URLs above.
+> The backend will reject any requests that are not coming from the frontend.
 
 ## Setup Instructions
 
