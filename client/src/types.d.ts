@@ -15,7 +15,7 @@ export interface User {
     name: string;
     email: string;
     mobile: string;
-    participants: string[]
+    friends: string[]
 }
 
 

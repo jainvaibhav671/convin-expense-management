@@ -10,11 +10,9 @@
     // Path aliases
     "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"],
-      "@env": ["src/lib/env"]
+      "@/*": ["src/*"]
     }
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules"]
 }
-

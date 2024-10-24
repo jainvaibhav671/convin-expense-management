@@ -1,7 +1,7 @@
 import { Router } from "express"
-import { Request, Response } from 'express';
-import { User, IUser } from '@/models/user';
-import { authenticateToken } from "@/middlewares/authMiddleware";
+import { Response } from 'express';
+import { User, IUser } from '../models/user';
+import { authenticateToken } from "../middlewares/authMiddleware";
 
 const router = Router()
 

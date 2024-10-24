@@ -14,7 +14,7 @@ export default function DueList() {
     const dues = Object.entries(overall.overall_dues)
 
     return (
-        <div className="pr-8 py-12 w-5/12 flex flex-col gap-4 text-center">
+        <div className="pr-4  py-12 w-5/12 flex flex-shrink flex-col gap-4 text-center">
             <div className="w-full flex items-center justify-between">
                 <h2 className="text-2xl font-bold">Friends</h2>
             </div>

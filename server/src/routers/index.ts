@@ -1,6 +1,6 @@
-import userRouter from "@/routers/user"
-import expenseRouter from "@/routers/expense"
-import authRouter from "@/routers/auth"
+import userRouter from "./user"
+import expenseRouter from "./expense"
+import authRouter from "./auth"
 
 export default {
     "/api/user": userRouter,

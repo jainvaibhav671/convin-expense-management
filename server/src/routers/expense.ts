@@ -1,7 +1,7 @@
-import { IExpense, Expense } from "@/models/expense";
+import { IExpense, Expense } from "../models/expense";
 import { Router, Request, Response } from "express"
 
-import { authenticateToken } from "@/middlewares/authMiddleware"
+import { authenticateToken } from "../middlewares/authMiddleware"
 
 const router = Router()
 

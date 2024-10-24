@@ -14,7 +14,7 @@ export interface IExpense extends Document {
 
 const expenseSchema = new Schema<IExpense>({
     title: { type: String, required: true },
-    description: { type: String, required: true },
+    description: { type: String, default: "" },
     amount: { type: Number, required: true },
     splitMethod: { type: String, enum: ['equal', 'exact', 'percentage'], required: true },
     splitDetails: { type: [Number], required: true },

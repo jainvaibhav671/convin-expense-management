@@ -2,8 +2,8 @@ import express from 'express';
 import cors from "cors"
 import cookieParser from "cookie-parser"
 
-import env from "@env"
-import routers from "@/routers"
+import env from "./lib/env"
+import routers from "./routers"
 import connectDB from './lib/connectDB';
 
 const app = express();
