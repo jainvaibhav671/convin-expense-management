@@ -50,10 +50,35 @@ router.get("/user", async (req, res): Promise<void> => {
     }
 })
 
-router.get("/overall", async (req: Request, res: Response): Promise<void> => {
+router.get("/overall", async (req: Request, res: Response) => {
     try {
-        const expenses = await Expense.find().populate('participants', 'name');
-        res.json(expenses);
+        // @ts-ignore
+        const expenses = await Expense.find({ userId: req.user.id as string });
+        console.log(expenses)
+
+        let dues: Record<string, number> = {}
+        expenses.forEach(expense => {
+            const participants = expense.get("participants")
+            const splitDetails = expense.get("splitDetails")
+
+            participants.forEach((participant, index) => {
+                if (index == 0) return
+
+                const due = splitDetails[index]
+                if (dues[participant]) {
+                    dues[participant] += due
+                } else {
+                    dues[participant] = due
+                }
+            })
+
+        })
+
+        res.json({
+            overall_spend: expenses.reduce((a,b) => a + b.get("splitDetails")[0], 0),
+            amount_to_recover: Object.values(dues).reduce((a,b) => a + b, 0),
+            overall_dues: dues
+        })
     } catch (error: any) {
         res.status(500).json({ message: error.message });
     }
@@ -67,6 +92,16 @@ router.get("/balance-sheet/:userId", async (req: Request, res: Response): Promis
         // Implement logic to generate and download balance sheet (CSV, PDF, etc.)
 
         res.send('Balance sheet download functionality');
+    } catch (error: any) {
+        res.status(500).json({ message: error.message });
+    }
+})
+
+router.get("/:id", async (req: Request, res: Response): Promise<void> => {
+    try {
+        console.log(req.cookies.token)
+        const expense = await Expense.findById(req.params.id);
+        res.json(expense);
     } catch (error: any) {
         res.status(500).json({ message: error.message });
     }

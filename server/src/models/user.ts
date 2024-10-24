@@ -22,6 +22,8 @@ const userSchema: Schema = new Schema({
             due: { type: Number, required: true }
         }
     ]
+}, {
+    collection: "Users"
 });
 
 export const User = mongoose.model<IUser>('User', userSchema);

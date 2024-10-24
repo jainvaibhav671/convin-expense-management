@@ -15,7 +15,6 @@ export default function ParticipantList({ totalAmount, splitMethod }: Props) {
     const [participants, setParticipants] = useState<Participant[]>([
         { name: user.name, percent: 0, contribution: 0 },
     ]);
-    console.log(user)
 
     const [error, setError] = useState<string>("");
     const [newParticipant, setNewParticipant] = useState<Participant>({

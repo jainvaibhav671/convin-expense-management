@@ -23,8 +23,10 @@ function App() {
     return (
         <div className="m-0 flex flex-col">
             <Header />
-            {userId.length == 0 && <p>Login in to start using the app</p>}
-            {userId.length != 0 && <Outlet />}
+            <div className="grid place-items-center">
+                {userId.length == 0 && <h1 className="text-2xl font-semibold">Login in to start using the app</h1>}
+                {userId.length != 0 && <Outlet />}
+            </div>
         </div>
     )
 }

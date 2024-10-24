@@ -13,8 +13,9 @@ import Logout from '@/components/Logout';
 import AuthForm from '@/components/AuthForm';
 import AddExpense, { loader as addExpenseLoader } from './components/AddExpense';
 import Error from "@/Error"
-import { addExpenseAction, deleteExpenseAction } from './actions/expense';
-import DeleteExpense from './components/DeleteExpense';
+import { addExpenseAction } from './actions/expense';
+import { Toaster } from "@/components/ui/toaster"
+import ShowExpense, { loader as showExpenseLoader } from './components/ShowExpense';
 
 const router = createBrowserRouter([
     {
@@ -34,6 +35,11 @@ const router = createBrowserRouter([
                         element: <AddExpense />,
                         action: addExpenseAction
                     },
+                    {
+                        path: "/expense/:id",
+                        element: <ShowExpense />,
+                        loader: showExpenseLoader
+                    }
                 ]
             },
             {
@@ -59,6 +65,7 @@ const router = createBrowserRouter([
 createRoot(document.getElementById('root')!).render(
     <StrictMode>
         <ThemeProvider defaultTheme="system" storageKey="vite-ui-theme">
+            <Toaster />
             <RouterProvider router={router} />
         </ThemeProvider>
     </StrictMode>,
